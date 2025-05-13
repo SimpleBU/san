@@ -12,8 +12,9 @@ public class Main {
 
         if (year % 400 == 0) {
             System.out.print("Количество дней 366");
-        } else if (year % 4 == 0 & year % 100 == 0) {
+        } else if (year % 100 == 0) {
+            System.out.print("Количество дней 365");
+        } else if (year % 4 == 0) {
             System.out.print("Количество дней 366");
         } else {
             System.out.print("Количество дней 365");
-        }

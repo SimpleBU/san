@@ -18,3 +18,7 @@ public class Main {
             System.out.print("Количество дней 366");
         } else {
             System.out.print("Количество дней 365");
+        }
+
+    }
+}

@@ -1,13 +1,66 @@
-public class FirstHW {
-    public static void main(String[] args) {
-        System.out.println("Filipp Voronov");
-        String firstName = "Filipp";
-        String lastNane = "Voronov";
-        System.out.println(firstName + " " + lastNane);
 
-        int income = 44000;
-        int spending = 30000;
-        System.out.println("Итого (руб.):");
-        System.out.println(income - spending);
+import java.util.Scanner;
+
+public class Main {
+
+    public static void printDelim() {
+        System.out.println();
+        System.out.println("Выберите операцию и введите её номер:");
+        System.out.println("1. Добавить новый доход");
+        System.out.println("2. Добавить новый расход");
+        System.out.println("3. Выбрать систему налогообложения");
+    }
+
+    public static void taxEarningsMinusSpendings(int earnings, int spendings) {
+        int taxX = (earnings - spendings) * 15 / 100;
+        int taxY = earnings * 6 / 100;
+        if (taxX < taxY) {
+            System.out.println("Мы советуем УСН доходы минус расходы");
+            System.out.println("Ваш налог составит: " + taxX);
+            System.out.println("Ваш налог на другой системе: " + taxY);
+            System.out.println("Ваша экономия: " + (taxY - taxX));
+        } else {
+            System.out.println("Мы советуем УСН доходы");
+            System.out.println("Ваш налог составит: " + taxY);
+            System.out.println("Ваш налог на другой системе: " + taxX);
+            System.out.println("Ваша экономия: " + (taxX - taxY));
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int earnings = 0;    // доходы
+        int spendings = 0;   // расходы
+
+        while (true) {
+            printDelim();
+            String input = scanner.nextLine();
+            if (input.equals("end")) {
+                break;
+            }
+
+            int operation = Integer.parseInt(input);
+            switch (operation) {
+                case 1:
+                    System.out.println("Введите сумму дохода:");
+                    int money = Integer.parseInt(scanner.nextLine());
+                    earnings += money;
+                    break;
+
+                case 2:
+                    System.out.println("Введите сумму расхода:");
+                    int spending = Integer.parseInt(scanner.nextLine());
+                    spendings += spending;
+                    break;
+
+                case 3:
+                    taxEarningsMinusSpendings(earnings, spendings);
+                    break;
+
+                default:
+                    System.out.println("Такой операции нет");
+            }
+        }
+        System.out.println("Программа завершена!");
     }
 }

@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 
 public class Main {
@@ -11,19 +10,41 @@ public class Main {
         System.out.println("3. Выбрать систему налогообложения");
     }
 
-    public static void taxEarningsMinusSpendings(int earnings, int spendings) {
-        int taxX = (earnings - spendings) * 15 / 100;
-        int taxY = earnings * 6 / 100;
-        if (taxX < taxY) {
-            System.out.println("Мы советуем УСН доходы минус расходы");
-            System.out.println("Ваш налог составит: " + taxX);
-            System.out.println("Ваш налог на другой системе: " + taxY);
-            System.out.println("Ваша экономия: " + (taxY - taxX));
-        } else {
+    public static void compareAndReturnMinTax(int earnings, int spendings) {
+        int tax1 = taxJustEarnings(earnings, spendings);
+        int tax2 = taxEarningsMinusSpendings(earnings, spendings);
+
+        if (tax1 < tax2) { // Исправлено условие сравнения
             System.out.println("Мы советуем УСН доходы");
-            System.out.println("Ваш налог составит: " + taxY);
-            System.out.println("Ваш налог на другой системе: " + taxX);
-            System.out.println("Ваша экономия: " + (taxX - taxY));
+            System.out.println("Ваш налог составит: " + tax1);
+            System.out.println("Ваш налог на другой системе: " + tax2);
+            System.out.println("Ваша экономия: " + (tax2 - tax1));
+        } else {
+            System.out.println("Мы советуем УСН доходы минус расходы");
+            System.out.println("Ваш налог составит: " + tax2);
+            System.out.println("Ваш налог на другой системе: " + tax1);
+            System.out.println("Ваша экономия: " + (tax1 - tax2));
+        }
+    }
+
+
+    public static int taxJustEarnings(int earnings, int spendings) {
+        int tax = earnings * 6 / 100;
+        if (tax >= 0) {
+            return tax;
+        } else {
+            // если дохоты оказались нулевыми
+            return 0;
+        }
+    }
+
+    public static int taxEarningsMinusSpendings(int earnings, int spendings) {
+        int tax = (earnings - spendings) * 15 / 100;
+        if (tax >= 0) {
+            return tax;
+        } else {
+            // если расходы оказались больше, то налог посчитается отрицательным
+            return 0;
         }
     }
 
@@ -54,7 +75,7 @@ public class Main {
                     break;
 
                 case 3:
-                    taxEarningsMinusSpendings(earnings, spendings);
+                    compareAndReturnMinTax(earnings, spendings);
                     break;
 
                 default:
